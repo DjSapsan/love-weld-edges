@@ -43,9 +43,9 @@ public:
 	/**
 	 * Creates a new WeldJoint connecting body1 and body2.
 	 **/
-	WeldJoint(Body *body1, Body *body2, float xA, float yA, float xB, float yB, bool collideConnected);
+	WeldJoint(Body *body1, Body *body2);
 
-	WeldJoint(Body *body1, Body *body2, float xA, float yA, float xB, float yB, bool collideConnected, float referenceAngle);
+	//WeldJoint(Body *body1, Body *body2);
 
 	virtual ~WeldJoint();
 
@@ -81,7 +81,8 @@ private:
 	// The Box2D weld joint object.
 	b2WeldJoint *joint;
 
-	void init(b2WeldJointDef &def, Body *body1, Body *body2, float xA, float yA, float xB, float yB, bool collideConnected);
+	//void init(b2WeldJointDef &def, Body *body1, Body *body2, float xA, float yA, float xB, float yB, bool collideConnected);
+	void init(b2WeldJointDef &def, Body *body1, Body *body2);
 };
 
 } // box2d

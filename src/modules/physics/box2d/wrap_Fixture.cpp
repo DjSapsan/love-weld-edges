@@ -254,6 +254,13 @@ int w_Fixture_setGroupIndex(lua_State *L)
 	return 0;
 }
 
+int w_Fixture_UpdateWeldJointAnchors(lua_State *L)
+{
+	Fixture *t = luax_checktype<Fixture>(L, 1);
+	t->UpdateWeldJointAnchors(L);
+	return 0;
+}
+
 int w_Fixture_destroy(lua_State *L)
 {
 	Fixture *t = luax_checkfixture(L, 1);
@@ -297,6 +304,7 @@ static const luaL_Reg w_Fixture_functions[] =
 	{ "setGroupIndex", w_Fixture_setGroupIndex },
 	{ "destroy", w_Fixture_destroy },
 	{ "isDestroyed", w_Fixture_isDestroyed },
+	{ "UpdateWeldJointAnchors", w_Fixture_UpdateWeldJointAnchors },
 	{ 0, 0 }
 };
 

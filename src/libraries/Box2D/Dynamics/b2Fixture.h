@@ -195,6 +195,8 @@ public:
 	/// Dump this fixture to the log file.
 	void Dump(int32 bodyIndex);
 
+	void UpdateWeldJointAnchors();
+	
 protected:
 
 	friend class b2Body;

@@ -334,6 +334,14 @@ int Fixture::getMassData(lua_State *L) const
 	return 4;
 }
 
+int Fixture::UpdateWeldJointAnchors(lua_State *L)
+{
+	//if (fixture->GetType() != b2Shape::e_circle)
+	//	return luaL_error(L, "Weld joint anchors can only be updated for circle fixtures.");
+	fixture->UpdateWeldJointAnchors();
+	return 0;
+}
+
 void Fixture::destroy(bool implicit)
 {
 	if (body->world->world->IsLocked())

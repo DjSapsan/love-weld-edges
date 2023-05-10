@@ -202,6 +202,8 @@ public:
 	 **/
 	int getMassData(lua_State *L) const;
 
+	int UpdateWeldJointAnchors(lua_State *L);
+
 	/**
 	 * Destroys this fixture.
 	 **/

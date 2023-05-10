@@ -26,6 +26,8 @@
 #include <Box2D/Collision/b2BroadPhase.h>
 #include <Box2D/Collision/b2Collision.h>
 #include <Box2D/Common/b2BlockAllocator.h>
+#include <Box2D/Dynamics/Joints/b2Joint.h>
+#include <Box2D/Dynamics/Joints/b2WeldJoint.h>
 
 b2Fixture::b2Fixture()
 {
@@ -224,6 +226,25 @@ void b2Fixture::SetSensor(bool sensor)
 		m_body->SetAwake(true);
 		m_isSensor = sensor;
 	}
+}
+
+void b2Fixture::UpdateWeldJointAnchors()
+{
+ 	b2CircleShape* circleShape = static_cast<b2CircleShape*>(m_shape);
+	float radius =  circleShape->m_radius;
+	//for each joint on the body
+	b2JointEdge* jointEdge = m_body->GetJointList();
+	while (jointEdge)
+	{
+		b2Joint* joint = jointEdge->joint;
+		if (joint->GetType() == e_weldJoint)
+		{
+			b2WeldJoint* weldJoint = static_cast<b2WeldJoint*>(joint);
+			weldJoint->UpdateAnchors(m_body, radius);
+		}
+		jointEdge = jointEdge->next;
+	}
+
 }
 
 void b2Fixture::Dump(int32 bodyIndex)

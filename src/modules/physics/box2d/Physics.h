@@ -239,9 +239,9 @@ public:
 	 * @param collideConnected Whether the connected bodies should collide with each other. Defaults to false.
 	 * @param referenceAngle The reference angle.
 	 **/
-	WeldJoint *newWeldJoint(Body *body1, Body *body2, float xA, float yA, float xB, float yB, bool collideConnected);
+	WeldJoint *newWeldJoint(Body *body1, Body *body2);
 
-	WeldJoint *newWeldJoint(Body *body1, Body *body2, float xA, float yA, float xB, float yB, bool collideConnected, float referenceAngle);
+	//WeldJoint *newWeldJoint(Body *body1, Body *body2);
 
 	/**
 	 * Creates a new WheelJoint connecting body1 with body2.

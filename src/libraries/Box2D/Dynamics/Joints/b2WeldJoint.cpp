@@ -19,6 +19,10 @@
 #include <Box2D/Dynamics/Joints/b2WeldJoint.h>
 #include <Box2D/Dynamics/b2Body.h>
 #include <Box2D/Dynamics/b2TimeStep.h>
+//include circle shape
+#include <Box2D/Collision/Shapes/b2CircleShape.h>
+//include fixture
+#include <Box2D/Dynamics/b2Fixture.h>
 
 // Point-to-point constraint
 // C = p2 - p1
@@ -34,13 +38,32 @@
 // J = [0 0 -1 0 0 1]
 // K = invI1 + invI2
 
-void b2WeldJointDef::Initialize(b2Body* bA, b2Body* bB, const b2Vec2& anchor)
+void b2WeldJointDef::Initialize(b2Body* bA, b2Body* bB)
 {
 	bodyA = bA;
 	bodyB = bB;
-	localAnchorA = bodyA->GetLocalPoint(anchor);
-	localAnchorB = bodyB->GetLocalPoint(anchor);
 	referenceAngle = bodyB->GetAngle() - bodyA->GetAngle();
+
+	//absolute angle
+	float32 absAngle = atan2(bB->GetPosition().y - bA->GetPosition().y, bB->GetPosition().x - bA->GetPosition().x);
+
+	//angle between body face and stick direction
+	float stickAngleA = absAngle - bodyA->GetAngle();
+	float stickAngleB = absAngle - bodyB->GetAngle() + b2_pi;
+
+	b2Fixture* shapeList = bA->GetFixtureList();
+ 	b2CircleShape* circle = static_cast<b2CircleShape*>(shapeList->GetShape());
+ 	float x = cos(stickAngleA) * circle->m_radius;
+ 	float y = sin(stickAngleA) * circle->m_radius;
+
+	localAnchorA = b2Vec2(x,y);
+
+	shapeList = bB->GetFixtureList();
+ 	circle = static_cast<b2CircleShape*>(shapeList->GetShape());
+ 	x = cos(stickAngleB) * circle->m_radius;
+ 	y = sin(stickAngleB) * circle->m_radius;
+
+	localAnchorB = b2Vec2(x,y);
 }
 
 b2WeldJoint::b2WeldJoint(const b2WeldJointDef* def)
@@ -303,6 +326,21 @@ bool b2WeldJoint::SolvePositionConstraints(const b2SolverData& data)
 	data.positions[m_indexB].a = aB;
 
 	return positionError <= b2_linearSlop && angularError <= b2_angularSlop;
+}
+
+//update local anchors by extending the vector to match the radius
+void b2WeldJoint::UpdateAnchors(b2Body* body, float radius)
+{
+	if (body == m_bodyA)
+	{
+		float lenDiff = radius / m_localAnchorA.Length();
+		m_localAnchorA *= lenDiff;
+	}
+	else
+	{
+		float lenDiff = radius / m_localAnchorB.Length();
+		m_localAnchorB *= lenDiff;
+	}
 }
 
 b2Vec2 b2WeldJoint::GetAnchorA() const

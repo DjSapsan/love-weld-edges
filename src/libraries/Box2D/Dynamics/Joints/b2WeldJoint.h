@@ -31,6 +31,8 @@ struct b2WeldJointDef : public b2JointDef
 		type = e_weldJoint;
 		localAnchorA.Set(0.0f, 0.0f);
 		localAnchorB.Set(0.0f, 0.0f);
+		//stickAngleA = 0.0f;
+		//stickAngleB = 0.0f;
 		referenceAngle = 0.0f;
 		frequencyHz = 0.0f;
 		dampingRatio = 0.0f;
@@ -38,7 +40,8 @@ struct b2WeldJointDef : public b2JointDef
 
 	/// Initialize the bodies, anchors, and reference angle using a world
 	/// anchor point.
-	void Initialize(b2Body* bodyA, b2Body* bodyB, const b2Vec2& anchor);
+	//void Initialize(b2Body* bodyA, b2Body* bodyB, const b2Vec2& anchor);
+	void Initialize(b2Body* bodyA, b2Body* bodyB);
 
 	/// The local anchor point relative to bodyA's origin.
 	b2Vec2 localAnchorA;
@@ -55,6 +58,12 @@ struct b2WeldJointDef : public b2JointDef
 
 	/// The damping ratio. 0 = no damping, 1 = critical damping.
 	float32 dampingRatio;
+
+	/// The angle between the bodyA face and stick direction
+	//float32 stickAngleA;
+
+	/// The angle between the bodyB face and stick direction
+	//float32 stickAngleB;
 };
 
 /// A weld joint essentially glues two bodies together. A weld joint may
@@ -91,12 +100,16 @@ public:
 protected:
 
 	friend class b2Joint;
+	friend class b2Fixture;
 
 	b2WeldJoint(const b2WeldJointDef* def);
 
 	void InitVelocityConstraints(const b2SolverData& data);
 	void SolveVelocityConstraints(const b2SolverData& data);
 	bool SolvePositionConstraints(const b2SolverData& data);
+
+	/// update anchor points after the radius changed to be on the edge
+	void UpdateAnchors(b2Body* bodyA, float radius);
 
 	float32 m_frequencyHz;
 	float32 m_dampingRatio;
