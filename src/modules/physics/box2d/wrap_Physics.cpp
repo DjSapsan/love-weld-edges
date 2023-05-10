@@ -358,27 +358,11 @@ int w_newWeldJoint(lua_State *L)
 {
 	Body *body1 = luax_checkbody(L, 1);
 	Body *body2 = luax_checkbody(L, 2);
-	float xA = (float)luaL_checknumber(L, 3);
-	float yA = (float)luaL_checknumber(L, 4);
-	float xB, yB;
-	bool collideConnected;
-	if (lua_gettop(L) >= 6)
-	{
-		xB = (float)luaL_checknumber(L, 5);
-		yB = (float)luaL_checknumber(L, 6);
-		collideConnected = luax_optboolean(L, 7, false);
-	}
-	else
-	{
-		xB = xA;
-		yB = yA;
-		collideConnected = luax_optboolean(L, 5, false);
-	}
 	WeldJoint *j;
 	luax_catchexcept(L, [&]() {
 			j = instance()->newWeldJoint(body1, body2);
 			}
-);
+	);
 	luax_pushtype(L, j);
 	j->release();
 	return 1;
