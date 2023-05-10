@@ -376,14 +376,8 @@ int w_newWeldJoint(lua_State *L)
 	}
 	WeldJoint *j;
 	luax_catchexcept(L, [&]() {
-		//if (lua_gettop(L) >= 8)
-		//{
-		//	float referenceAngle = (float)luaL_checknumber(L, 8);
 			j = instance()->newWeldJoint(body1, body2);
-		//}
-		//else
-		//	j = instance()->newWeldJoint(body1, body2);
-	}
+			}
 );
 	luax_pushtype(L, j);
 	j->release();

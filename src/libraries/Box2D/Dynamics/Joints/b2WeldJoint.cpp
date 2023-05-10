@@ -19,9 +19,7 @@
 #include <Box2D/Dynamics/Joints/b2WeldJoint.h>
 #include <Box2D/Dynamics/b2Body.h>
 #include <Box2D/Dynamics/b2TimeStep.h>
-//include circle shape
 #include <Box2D/Collision/Shapes/b2CircleShape.h>
-//include fixture
 #include <Box2D/Dynamics/b2Fixture.h>
 
 // Point-to-point constraint

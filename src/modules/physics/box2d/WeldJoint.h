@@ -45,8 +45,6 @@ public:
 	 **/
 	WeldJoint(Body *body1, Body *body2);
 
-	//WeldJoint(Body *body1, Body *body2);
-
 	virtual ~WeldJoint();
 
 	/**

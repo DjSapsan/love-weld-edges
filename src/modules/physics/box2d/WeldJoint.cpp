@@ -45,15 +45,6 @@ WeldJoint::WeldJoint(Body *body1, Body *body2)
 	joint = (b2WeldJoint *)createJoint(&def);
 }
 
-// WeldJoint::WeldJoint(Body *body1, Body *body2, float xA, float yA, float xB, float yB, bool collideConnected, float referenceAngle)
-// 	: Joint(body1, body2)
-// 	, joint(NULL)
-// {
-// 	b2WeldJointDef def;
-// 	init(def, body1, body2, xA, yA, xB, yB, collideConnected);
-// 	def.referenceAngle = referenceAngle;
-// 	joint = (b2WeldJoint *)createJoint(&def);
-// }
 
 WeldJoint::~WeldJoint()
 {
@@ -61,9 +52,7 @@ WeldJoint::~WeldJoint()
 
 void WeldJoint::init(b2WeldJointDef &def, Body *body1, Body *body2)
 {
-	def.Initialize(body1->body, body2->body);//, Physics::scaleDown(b2Vec2(xA,yA)));
-	//def.localAnchorB = body2->body->GetLocalPoint(Physics::scaleDown(b2Vec2(xB, yB)));
-	//def.collideConnected = collideConnected;
+	def.Initialize(body1->body, body2->body);
 }
 
 void WeldJoint::setFrequency(float hz)

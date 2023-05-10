@@ -273,10 +273,6 @@ WeldJoint *Physics::newWeldJoint(Body *body1, Body *body2)
 	return new WeldJoint(body1, body2);
 }
 
-//WeldJoint *Physics::newWeldJoint(Body *body1, Body *body2, float xA, float yA, float xB, float yB, bool collideConnected, float referenceAngle)
-//{
-//	return new WeldJoint(body1, body2);
-//}
 
 WheelJoint *Physics::newWheelJoint(Body *body1, Body *body2, float xA, float yA, float xB, float yB, float ax, float ay, bool collideConnected)
 {

@@ -241,8 +241,6 @@ public:
 	 **/
 	WeldJoint *newWeldJoint(Body *body1, Body *body2);
 
-	//WeldJoint *newWeldJoint(Body *body1, Body *body2);
-
 	/**
 	 * Creates a new WheelJoint connecting body1 with body2.
 	 * @param xA Anchor for body 1 along the x-axis. (World coordinates)
